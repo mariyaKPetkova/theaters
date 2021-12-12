@@ -1,0 +1,26 @@
+
+
+            <section class="container">
+    <h1>My Theater Info</h1>
+    <p>Lorem reprehenderit nostrud do do ut ad irure aliquip anim adipisicing nulla ullamco. Non mollit
+        Lorem sunt proident nostrud dolore est minim reprehenderit adipisicing consectetur dolore.
+        Nostrud id amet ad irure irure aute ad veniam deserunt mollit sint pariatur.</p>
+</section>
+<section>
+    <div class="aux">
+        <h1>Available Plays</h1>
+        <div class="home-buttons">
+            <a class="btn create-play" href="/products/create">Create Theater</a>
+            <a class="btn create-play" href="">Sort by Date</a>
+            <a class="btn create-play" href="">Sort by Likes</a>
+        </div>
+    </div>
+    <div class="theaters-container">
+
+        {{#each products}}
+        {{> product}}
+        {{else}}
+        <h4>No plays yet...</h4>
+        {{/each}}
+    </div>
+</section>

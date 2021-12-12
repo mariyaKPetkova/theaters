@@ -1,0 +1,19 @@
+
+<section class="container">
+    <h1>My Theater Info</h1>
+    <p>Lorem reprehenderit nostrud do do ut ad irure aliquip anim adipisicing nulla ullamco.</p>
+</section>
+
+<section>
+    <h1>Best Rated Plays</h1>
+    <div class="theaters-container">
+
+
+        {{#each products}}
+        {{> productst}}
+        {{else}}
+        <h4>No plays yet...</h4>
+        {{/each}}
+
+    </div>
+</section>
