@@ -39,13 +39,23 @@ async function like(productId,userId){
     return product.save()
 }
 
-
-
+async function sortByData(){
+    const products = await Product.find({}).lean()
+    const sortedProducts = products.sort((a,b)=> b.createdAt - a.createdAt)
+    return sortedProducts
+}
+async function sortByLikes(){
+    const products = await Product.find({}).lean()
+    const sortedProducts = products.sort((a,b)=> b.likes.length - a.likes.length)
+    return sortedProducts
+}
 module.exports = {
     createProduct,
     getAllProducts,
     getProductById,
     editProduct,
     deleteProduct,
-    like
+    like,
+    sortByData,
+    sortByLikes
 }

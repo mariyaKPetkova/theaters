@@ -136,5 +136,12 @@ router.get('/like/:id', isUser(), async (req, res) => {
         res.redirect('/404')
     }
 })
-
+router.get('/sortdata', async (req,res)=>{
+    const products = await req.storage.sortByData()
+    res.render('home/home',{products})
+})
+router.get('/sortlikes', async (req,res)=>{
+    const products = await req.storage.sortByLikes()
+    res.render('home/home',{products})
+})
 module.exports = router
