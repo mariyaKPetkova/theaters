@@ -7,7 +7,7 @@ async function createProduct(productData){
 }
 
 async function getAllProducts(){
-    const products = await Product.find({}).lean()
+    const products = await Product.find({public:true}).lean()
     
     return products
 }
