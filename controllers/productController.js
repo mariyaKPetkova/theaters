@@ -100,7 +100,7 @@ router.post('/edit/:id', isUser(), async (req, res) => {
                 name: req.body.name,
                 description: req.body.description,
                 imageUrl: req.body.imageUrl,
-                public :req.body.public
+                public :Boolean(req.body.public)
 
             }
         }
