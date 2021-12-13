@@ -40,12 +40,12 @@ async function like(productId,userId){
 }
 
 async function sortByData(){
-    const products = await Product.find({}).lean()
+    const products = await Product.find({public:true}).lean()
     const sortedProducts = products.sort((a,b)=> b.createdAt - a.createdAt)
     return sortedProducts
 }
 async function sortByLikes(){
-    const products = await Product.find({}).lean()
+    const products = await Product.find({public:true}).lean()
     const sortedProducts = products.sort((a,b)=> b.likes.length - a.likes.length)
     return sortedProducts
 }
