@@ -1,43 +1,34 @@
 const router = require('express').Router()
-const { body, validationResult } = require('express-validator')
 const { isGuest } = require('../middlewares/guards.js')
 
 router.get('/register', isGuest(), (req, res) => {
     res.render('user/register')
 })
 
-router.post(
-    '/register',
-    isGuest(),
-    body('username')
-        .isLength({ min: 3 }).withMessage('Username must be at least 3 symbols')
-        .isAlphanumeric().withMessage('Username may contain only latin letters and numbers'),
-    body('password')
-        .isLength({ min: 3 }).withMessage('Password must be at least 3 symbols')
-        .isAlphanumeric().withMessage('Password may contain only latin letters and numbers'),
-    body('repeatPassword').custom((value, { req }) => {
-        if (value != req.body.password) {
-            throw new Error('Passwords do not match')
-        }
-        return true
-    }),
-    async (req, res) => {
-        const { errors } = validationResult(req)
+router.post('/register',isGuest(),async (req, res) => {
         
         try {
-            if (errors.length > 0) {
-                const message = errors.map(err => err.msg).join('\n')
-                throw new Error(message)
+            if(req.body.password != req.body.repeatPassword){
+                throw new Error('Passwords do not match.')
             }
-            await req.auth.register(req.body.username,  req.body.password)
+            if(req.body.password < 3){
+                throw new Error('Passwords must be at least 3 symbols.')
+            }
+
+            await req.auth.register(req.body.username, req.body.password)
             res.redirect('/catalog')
         } catch (err) {
-            console.log(errors)
+            console.log(err)
+            let errors
+            if (err.errors) {
+                errors = Object.values(err.errors).map(e => e.properties.message)
+            } else {
+                errors = [err.message]
+            }
             const ctx = {
-                errors: err.message.split('\n'),
+                errors,
                 userData: {
                     username: req.body.username,
-                    
                 }
             }
             res.render('user/register', ctx)
